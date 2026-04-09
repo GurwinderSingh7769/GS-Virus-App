@@ -16,7 +16,7 @@ import {
   Activity,
 } from "lucide-react";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_BASE = "https://gs-virus-app.onrender.com";
 
 function StatusBadge({ result }) {
   const map = {
