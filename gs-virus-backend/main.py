@@ -14,7 +14,8 @@ app = FastAPI(title="GS-Virus Scanner API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    # This allows your Vercel frontend to talk to your Render backend
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -109,3 +110,11 @@ async def delete_scan(scan_id: int):
     if not deleted:
         raise HTTPException(status_code=404, detail="Scan record not found.")
     return {"message": "Scan record deleted successfully."}
+
+if __name__ == "__main__":
+    import uvicorn
+    import os
+    # Render provides the PORT variable automatically
+    port = int(os.environ.get("PORT", 8000))
+    # Host must be 0.0.0.0 for Render to see the app
+    uvicorn.run(app, host="0.0.0.0", port=port)
